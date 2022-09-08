@@ -17,6 +17,6 @@ export class SocketService {
   }
 
   connectToSpecificSpace(post: string): WebSocketSubject<Comment> {
-    return webSocket(this.urlBase + '/retrieve/${post}');
+    return webSocket(this.urlBase + `/retrieve/${post}`);
   }
 }

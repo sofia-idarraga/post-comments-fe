@@ -3,6 +3,7 @@ import { AddComment, Comment } from 'src/app/entities/comments';
 import { CommentService } from 'src/app/services/comment.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { Post } from 'src/app/entities/post';
 
 @Component({
   selector: 'app-comment',
@@ -11,9 +12,18 @@ import { WebSocketSubject } from 'rxjs/webSocket';
 })
 export class CommentComponent implements OnInit {
 
-  @Input() postId?: string;
+  postComments: Comment[] = [];
+  @Input() post: Post = {
+    id: '',
+    aggregateId: '',
+    author: '',
+    title: '',
+    comments: this.postComments
+  };
 
-  @Input() comments: Comment[] = [];
+  comments = this.post.comments;
+
+
 
   socketManager?: WebSocketSubject<Comment>;
 
@@ -22,14 +32,17 @@ export class CommentComponent implements OnInit {
     , private socket: SocketService) { }
 
   ngOnInit(): void {
+    var element = document.getElementById("toHide");
+    element?.setAttribute("id", "toHide" + this.post.aggregateId);
+    console.log(this.post.comments)
     this.connectToMainSpace();
   }
 
   connectToMainSpace() {
-    this.socketManager = this.socket.connectToSpecificSpace(this.postId ? String(this.postId) : 'main');
+    this.socketManager = this.socket.connectToSpecificSpace(this.post.aggregateId);
     this.socketManager.subscribe(comment => {
       console.log(comment)
-      this.comments.unshift(comment)
+      this.post.comments.push(comment)
     });
   }
 
@@ -38,8 +51,8 @@ export class CommentComponent implements OnInit {
     content = content.trim();
     var postId: string = '';
     if (!author && !content) { return; }
-    if (this.postId) {
-      postId = this.postId
+    if (this.post.aggregateId) {
+      postId = this.post.aggregateId
     }
     var id: string = String(Math.floor(Math.random() * (1000)));
     var comment: AddComment = {
@@ -48,6 +61,11 @@ export class CommentComponent implements OnInit {
     this.commentService.addComment(comment)
       .subscribe()
 
+  }
+
+  myFunction(id: string) {
+    var select = document.querySelector("#toHide" + id);
+    select?.classList.toggle("hide");
   }
 
 
