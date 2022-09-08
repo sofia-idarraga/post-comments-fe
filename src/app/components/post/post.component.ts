@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import { CreatePost, Post } from 'src/app/entities/post';
+import { SocketService } from 'src/app/services/socket.service';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-post',
@@ -9,14 +11,30 @@ import { CreatePost, Post } from 'src/app/entities/post';
 })
 export class PostComponent implements OnInit {
 
+
+
+  show: boolean = false;
+
   posts: Post[] = [];
 
+  socketManager?: WebSocketSubject<Post>;
 
-  constructor(private postService: PostService) { }
+
+  constructor(private postService: PostService, private socket: SocketService) { }
+
+
 
   ngOnInit(): void {
     this.getPosts();
-    console.log(this.posts)
+    this.connectToMainSpace();
+  }
+
+  connectToMainSpace() {
+    this.socketManager = this.socket.connectToGeneralSpace();
+    this.socketManager.subscribe(post => {
+      console.log(post)
+      this.posts.unshift(post)
+    });
   }
 
   add(title: string, author: string): void {
@@ -31,15 +49,7 @@ export class PostComponent implements OnInit {
     }
     var aggregateId = postId
     this.postService.addPost(post)
-      .subscribe(post => {
-        var newPost: Post = {
-          aggregateId,
-          title,
-          author,
-          comments: []
-        }
-        this.posts.push(newPost);
-      });
+      .subscribe();
   }
 
   getPosts(): void {

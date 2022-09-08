@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AddComment, Comment } from 'src/app/entities/comments';
 import { CommentService } from 'src/app/services/comment.service';
+import { SocketService } from 'src/app/services/socket.service';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-comment',
@@ -13,9 +15,22 @@ export class CommentComponent implements OnInit {
 
   @Input() comments: Comment[] = [];
 
-  constructor(private commentService: CommentService) { }
+  socketManager?: WebSocketSubject<Comment>;
+
+
+  constructor(private commentService: CommentService
+    , private socket: SocketService) { }
 
   ngOnInit(): void {
+    this.connectToMainSpace();
+  }
+
+  connectToMainSpace() {
+    this.socketManager = this.socket.connectToSpecificSpace(this.postId ? String(this.postId) : 'main');
+    this.socketManager.subscribe(comment => {
+      console.log(comment)
+      this.comments.unshift(comment)
+    });
   }
 
   add(author: string, content: string): void {
@@ -31,15 +46,7 @@ export class CommentComponent implements OnInit {
       postId, id, author, content
     }
     this.commentService.addComment(comment)
-      .subscribe(comment => {
-        var newComment: Comment = {
-          id,
-          postId,
-          author,
-          content
-        }
-        this.comments.push(newComment);
-      })
+      .subscribe()
 
   }
 
