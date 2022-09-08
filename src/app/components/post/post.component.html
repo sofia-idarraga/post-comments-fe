@@ -1,0 +1,36 @@
+<div class="container">
+  <form>
+    <p>Post</p>
+    <input placeholder="Title" id="new-post-title" #postTitle /><br />
+    <input
+      placeholder="Author"
+      class="author"
+      id="new-post-author"
+      #postAuthor
+    />
+    <input
+      type="button"
+      class="button"
+      value="Publish"
+      (click)="
+        add(postTitle.value, postAuthor.value);
+        postTitle.value = '';
+        postAuthor.value = ''
+      "
+    />
+  </form>
+</div>
+
+<div *ngFor="let post of posts">
+  <hr />
+
+  <div class="post-container">
+    <h2>{{ post.title | uppercase }}</h2>
+    <p>by: {{ post.author }}</p>
+    <hr />
+    <app-comment
+      [postId]="post.aggregateId"
+      [comments]="post.comments"
+    ></app-comment>
+  </div>
+</div>

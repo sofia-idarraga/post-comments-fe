@@ -1,0 +1,29 @@
+<p style="color: rgb(168, 87, 161)">Comments</p>
+
+<div class="box">
+  <div *ngFor="let comment of comments" class="comment-content">
+    <p class="comment-author">{{ comment.author }} said:</p>
+    <p class="comment-content">" {{ comment.content }} "</p>
+  </div>
+</div>
+
+<form>
+  <input placeholder="Author" id="new-comment-author" #commentAuthor /><br />
+  <textarea
+    placeholder="Content"
+    class="content"
+    id="new-comment-content"
+    #commentContent
+  ></textarea>
+  <br />
+  <input
+    type="button"
+    class="button"
+    value="Publish"
+    (click)="
+      add(commentAuthor.value, commentContent.value);
+      commentAuthor.value = '';
+      commentContent.value = ''
+    "
+  /><br />
+</form>

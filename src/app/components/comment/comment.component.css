@@ -1,0 +1,50 @@
+.author {
+  flex: 3 1 10ch;
+}
+
+.content {
+  flex: 10 10 10ch;
+  width: 5cm;
+  height: 4cm;
+  margin: 0.5rem;
+  border: none;
+  background: hsl(0 0% 93%);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+
+input {
+  flex: 1 1 10ch;
+  width: 5cm;
+  margin: 0.5rem;
+  border: none;
+  background: hsl(0 0% 93%);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+.box {
+  border-radius: 5px;
+  padding: 30px;
+  margin: 20px;
+}
+
+.comment-content {
+  color: hsl(229, 6%, 66%);
+}
+
+.comment-author {
+  color: hsl(234, 12%, 34%);
+}
+
+.button:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 4px darkgray;
+}
+
+.button:active {
+  /* set time duration to your needs */
+  animation: gradient 100ms;
+  background: white;
+  color: hotpink;
+  box-shadow: 0 6px 4px darkgray;
+}
