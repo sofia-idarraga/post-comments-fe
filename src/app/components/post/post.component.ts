@@ -3,6 +3,8 @@ import { PostService } from 'src/app/services/post.service';
 import { CreatePost, Post } from 'src/app/entities/post';
 import { SocketService } from 'src/app/services/socket.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { StateService } from 'src/app/services/state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -20,13 +22,35 @@ export class PostComponent implements OnInit {
   socketManager?: WebSocketSubject<Post>;
 
 
-  constructor(private postService: PostService, private socket: SocketService) { }
+  constructor(private postService: PostService,
+    private socket: SocketService,
+    private state: StateService,
+    private router: Router
 
+  ) { }
 
+  stateOfUser: any;
 
   ngOnInit(): void {
-    this.getPosts();
-    this.connectToMainSpace();
+    if (this.validateLogin()) {
+      this.getPosts();
+      this.connectToMainSpace();
+    }
+  }
+
+  validateLogin(): boolean {
+    let validate = false;
+    this.state.state.subscribe(currentState => {
+      this.stateOfUser = currentState;
+      console.log(this.stateOfUser)
+      if (!currentState.logedIn) {
+        this.router.navigateByUrl('/')
+        return
+      }
+      validate = true
+    })
+
+    return validate;
   }
 
   connectToMainSpace() {
@@ -48,7 +72,7 @@ export class PostComponent implements OnInit {
       postId, title, author
     }
     var aggregateId = postId
-    this.postService.addPost(post)
+    this.postService.addPost(post, this.stateOfUser.token)
       .subscribe();
   }
 

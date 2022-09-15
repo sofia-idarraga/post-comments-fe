@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <form>
+      <form [hidden]="stateOfUser.token === ''">
         <input
           placeholder="Author"
           class="author"

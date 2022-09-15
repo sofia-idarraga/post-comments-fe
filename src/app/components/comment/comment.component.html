@@ -12,25 +12,30 @@
       <p class="comment-content">" {{ comment.content }} "</p>
     </div>
   </div>
-
-  <form>
-    <input placeholder="Author" id="new-comment-author" #commentAuthor /><br />
-    <textarea
-      placeholder="Content"
-      class="content"
-      id="new-comment-content"
-      #commentContent
-    ></textarea>
-    <br />
-    <input
-      type="button"
-      class="button"
-      value="Publish"
-      (click)="
-        add(commentAuthor.value, commentContent.value);
-        commentAuthor.value = '';
-        commentContent.value = ''
-      "
-    /><br />
-  </form>
+  <div [hidden]="stateOfUser.token === ''">
+    <form>
+      <input
+        placeholder="Author"
+        id="new-comment-author"
+        #commentAuthor
+      /><br />
+      <textarea
+        placeholder="Content"
+        class="content"
+        id="new-comment-content"
+        #commentContent
+      ></textarea>
+      <br />
+      <input
+        type="button"
+        class="button"
+        value="Publish"
+        (click)="
+          add(commentAuthor.value, commentContent.value);
+          commentAuthor.value = '';
+          commentContent.value = ''
+        "
+      /><br />
+    </form>
+  </div>
 </div>

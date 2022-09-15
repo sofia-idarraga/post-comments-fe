@@ -1,0 +1,43 @@
+body {
+  font-family: "Raleway", sans-serif;
+  background-color: #e7e7e7;
+}
+
+.wrapper {
+  width: 800px;
+  height: 500px;
+  position: relative;
+  margin: 3% auto;
+  box-shadow: 2px 18px 70px 0px #9d9d9d;
+  overflow: hidden;
+}
+
+.call-text {
+  background-color: #fff;
+  width: 800px;
+  height: 450px;
+  position: absolute;
+  bottom: 0;
+  padding: 10%;
+  box-sizing: border-box;
+  text-align: center;
+}
+h1 {
+  font-size: 42px;
+  margin-top: 10%;
+  color: #696a86;
+}
+span {
+  color: #333;
+  font-weight: bolder;
+}
+button {
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(to left, #ab68ca, #de67a3);
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+  height: 50px;
+  width: 180px;
+  color: #fff;
+}

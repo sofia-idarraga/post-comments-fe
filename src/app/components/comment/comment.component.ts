@@ -4,6 +4,8 @@ import { SocketService } from 'src/app/services/socket.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Post } from 'src/app/entities/post';
 import { PostService } from 'src/app/services/post.service';
+import { StateService } from 'src/app/services/state.service';
+
 
 @Component({
   selector: 'app-comment',
@@ -23,19 +25,31 @@ export class CommentComponent implements OnInit {
 
   comments = this.post.comments;
 
-
+  stateOfUser: any;
 
   socketManager?: WebSocketSubject<Comment>;
 
 
   constructor(private service: PostService
-    , private socket: SocketService) { }
+    , private socket: SocketService,
+    private state: StateService,) { }
 
   ngOnInit(): void {
     var element = document.getElementById("toHide");
     element?.setAttribute("id", "toHide" + this.post.aggregateId);
     console.log(this.post.comments)
     this.connectToMainSpace();
+    this.validateLogin()
+  }
+
+  validateLogin(): boolean {
+    let validate = false;
+    this.state.state.subscribe(currentState => {
+      this.stateOfUser = currentState;
+      validate = true
+    })
+
+    return validate;
   }
 
   connectToMainSpace() {

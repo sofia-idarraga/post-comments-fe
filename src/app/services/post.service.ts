@@ -24,8 +24,16 @@ export class PostService {
     private http: HttpClient
   ) { }
 
-  addPost(post: CreatePost): Observable<CreatePost> {
-    return this.http.post<CreatePost>(this.url + "/create/post", post, this.httpOptions)
+  addPost(post: CreatePost, token: string): Observable<CreatePost> {
+    return this.http.post<CreatePost>(
+      this.url + "/create/post",
+      post,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        })
+      })
       .pipe(
         tap((newPost: CreatePost) => {
           console.log(`added post w/ id=${post.postId}`),
@@ -40,6 +48,16 @@ export class PostService {
         tap(() => {
           console.log(`added comment w/ id= ${comment.id} to post ${comment.postId}`),
             catchError(this.handleError<AddComment>('addComment'))
+        })
+      )
+  }
+
+  logIn(user: any) {
+    return this.http.post<any>(this.url + "/auth/login", user, this.httpOptions)
+      .pipe(
+        tap(() => {
+          console.log(` user loged with ${user.username}`),
+            catchError(this.handleError<any>('logIn'))
         })
       )
   }

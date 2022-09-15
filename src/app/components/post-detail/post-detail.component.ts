@@ -4,6 +4,8 @@ import { WebSocketSubject } from 'rxjs/webSocket';
 import { Comment, AddComment } from 'src/app/entities/comments';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
+import { StateService } from 'src/app/services/state.service';
+import { Router } from '@angular/router';
 
 import { Location } from '@angular/common';
 import { Post } from 'src/app/entities/post';
@@ -23,7 +25,7 @@ export class PostDetailComponent implements OnInit {
     comments: this.postComments,
   };
 
-  // post: Post | undefined;
+  stateOfUser: any;
 
   socketManager?: WebSocketSubject<Comment>;
 
@@ -31,11 +33,15 @@ export class PostDetailComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private socket: SocketService,
-    private service: PostService
+    private service: PostService,
+    private state: StateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getPost();
+    if (this.validateLogin()) {
+      this.getPost();
+    }
   }
 
   getPost() {
@@ -45,6 +51,19 @@ export class PostDetailComponent implements OnInit {
       console.log(this.post);
       this.connectToMainSpace();
     });
+  }
+
+  validateLogin(): boolean {
+    let validate = false;
+    this.state.state.subscribe(currentState => {
+      this.stateOfUser = currentState;
+      if (!currentState.logedIn) {
+        this.router.navigateByUrl('/')
+        return
+      }
+      validate = true
+    })
+    return validate;
   }
 
   connectToMainSpace() {
