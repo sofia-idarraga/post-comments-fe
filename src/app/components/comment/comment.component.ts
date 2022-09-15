@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AddComment, Comment } from 'src/app/entities/comments';
-import { CommentService } from 'src/app/services/comment.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { Post } from 'src/app/entities/post';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-comment',
@@ -28,7 +28,7 @@ export class CommentComponent implements OnInit {
   socketManager?: WebSocketSubject<Comment>;
 
 
-  constructor(private commentService: CommentService
+  constructor(private service: PostService
     , private socket: SocketService) { }
 
   ngOnInit(): void {
@@ -58,7 +58,7 @@ export class CommentComponent implements OnInit {
     var comment: AddComment = {
       postId, id, author, content
     }
-    this.commentService.addComment(comment)
+    this.service.addComment(comment)
       .subscribe()
 
   }

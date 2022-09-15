@@ -57,6 +57,8 @@ export class PostComponent implements OnInit {
       .subscribe(posts => this.posts = posts)
   }
 
-
+  closeConnection(): void {
+    this.socketManager?.complete();
+  }
 
 }

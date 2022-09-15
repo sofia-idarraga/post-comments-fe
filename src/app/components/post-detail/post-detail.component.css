@@ -1,0 +1,73 @@
+* {
+  place-items: center;
+  text-align: center;
+}
+
+body {
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+}
+
+h2 {
+  color: rgb(168, 87, 161);
+  font-weight: 600;
+}
+
+p {
+  color: hsl(229, 6%, 66%);
+}
+
+.upper-data {
+  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+  padding: 3ch;
+  border-radius: 2ch;
+}
+
+.comment {
+  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 5%);
+  padding: 3ch;
+  border-radius: 2ch;
+}
+
+.author {
+  flex: 10 10 10ch;
+  width: 5cm;
+  margin: 0.5rem;
+  border: none;
+  background: hsl(0 0% 93%);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+
+.content {
+  flex: 10 10 10ch;
+  width: 5cm;
+  height: 4cm;
+  margin: 0.5rem;
+  border: none;
+  background: hsl(0 0% 93%);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+
+.button {
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: hotpink;
+  color: white;
+  box-shadow: 0 0.75rem 0.5rem -0.5rem hsl(0 50% 80%);
+}
+
+.button:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 4px darkgray;
+}
+
+.button:active {
+  /* set time duration to your needs */
+  animation: gradient 100ms;
+  background: white;
+  color: hotpink;
+  box-shadow: 0 6px 4px darkgray;
+}

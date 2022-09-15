@@ -1,0 +1,44 @@
+<button (click)="closeSession()">↩</button>
+<div class="container">
+  <div class="upper-data">
+    <h2>{{ post.title | uppercase }}</h2>
+    <h2>{{ post.author | uppercase }}</h2>
+  </div>
+
+  <div class="lower-data">
+    <div>
+      <div class="box">
+        <div *ngFor="let comment of post.comments" class="comment">
+          <p class="comment-author">{{ comment.author }} said:</p>
+          <p class="comment-content">" {{ comment.content }} "</p>
+        </div>
+      </div>
+
+      <form>
+        <input
+          placeholder="Author"
+          class="author"
+          id="new-comment-author"
+          #commentAuthor
+        /><br />
+        <textarea
+          placeholder="Content"
+          class="content"
+          id="new-comment-content"
+          #commentContent
+        ></textarea>
+        <br />
+        <input
+          type="button"
+          class="button"
+          value="Publish"
+          (click)="
+            add(commentAuthor.value, commentContent.value);
+            commentAuthor.value = '';
+            commentContent.value = ''
+          "
+        /><br />
+      </form>
+    </div>
+  </div>
+</div>

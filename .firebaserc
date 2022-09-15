@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "post-comments-sim"
+  },
+  "targets": {
+    "post-comments-sim": {
+      "hosting": {
+        "post-comments": [
+          "post-comments-sim"
+        ]
+      }
+    }
+  }
+}

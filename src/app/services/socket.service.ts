@@ -9,7 +9,9 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 })
 export class SocketService {
 
-  urlBase: string = 'ws://localhost:8082'
+  //  urlBase: string = 'ws://localhost:8082'
+  urlBase: string = 'wss://gamma-sim-heroku.herokuapp.com'
+
 
   constructor() { }
   connectToGeneralSpace(): WebSocketSubject<Post> {
