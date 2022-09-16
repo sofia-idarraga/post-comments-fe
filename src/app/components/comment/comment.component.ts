@@ -72,7 +72,7 @@ export class CommentComponent implements OnInit {
     var comment: AddComment = {
       postId, id, author, content
     }
-    this.service.addComment(comment)
+    this.service.addComment(comment, this.stateOfUser.token)
       .subscribe()
 
   }

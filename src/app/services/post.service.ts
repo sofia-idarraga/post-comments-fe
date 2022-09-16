@@ -42,8 +42,14 @@ export class PostService {
       )
   }
 
-  addComment(comment: AddComment): Observable<AddComment> {
-    return this.http.post<AddComment>(this.url + "/add/comment", comment, this.httpOptions)
+  addComment(comment: AddComment, token: string): Observable<AddComment> {
+    return this.http.post<AddComment>(this.url + "/add/comment",
+      comment, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    })
       .pipe(
         tap(() => {
           console.log(`added comment w/ id= ${comment.id} to post ${comment.postId}`),
