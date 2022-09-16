@@ -1,12 +1,13 @@
 <div class="container">
   <form>
     <p>Post</p>
-    <input placeholder="Title" id="new-post-title" #postTitle /><br />
+    <input placeholder="Title" id="new-post-title" #postTitle required /><br />
     <input
       placeholder="Author"
       class="author"
       id="new-post-author"
       #postAuthor
+      required
     />
     <input
       [hidden]="stateOfUser.token === ''"
